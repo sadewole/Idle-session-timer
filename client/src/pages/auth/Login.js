@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import client from '../../client';
+import { useAuth } from '../../context';
 
 const Login = () => {
+  const { setUser } = useAuth();
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -12,11 +14,14 @@ const Login = () => {
         email: email.value,
         password: password.value,
       })
-      .then((data) => {
-        console.log(data);
+      .then(({ data: { token, user } }) => {
+        client.defaults.headers.token = token;
+        localStorage.setItem('token', token);
+        setUser(user);
       })
       .catch(console.log);
   };
+
   return (
     <div className='text-center'>
       <form className='form-signin' onSubmit={onSubmit}>

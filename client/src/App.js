@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
+// Relative paths
 import Loading from './components/Loading';
 import NavBar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from './pages/auth';
-// import ProtectedRoute from './components/ProtectedRoute';
 
 // styles
 import './App.css';

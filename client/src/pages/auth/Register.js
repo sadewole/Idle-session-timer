@@ -1,14 +1,27 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+// Relative paths
+import client from '../../client';
+import { useAuth } from '../../context';
 
 const Register = () => {
-  const navigate = useNavigate();
-
+  const { setUser } = useAuth();
   const onSubmit = (event) => {
     event.preventDefault();
 
-    const [name, email, password] = event.target.elements;
-    console.log(name, email, password);
+    const [email, password] = event.target.elements;
+    client
+      .post('auth/register', {
+        email: email.value,
+        password: password.value,
+      })
+      .then(({ data: { token, user } }) => {
+        client.defaults.headers.token = token;
+        localStorage.setItem('token', token);
+        setUser(user);
+      })
+      .catch(console.log);
   };
 
   return (
@@ -16,17 +29,6 @@ const Register = () => {
       <h1 className='h3 mb-3 font-weight-normal text-center'>
         Please register a new account
       </h1>
-      <label htmlFor='inputEmail' className='sr-only'>
-        Name
-      </label>
-      <input
-        type='name'
-        id='name'
-        className='form-control mb-2'
-        placeholder='Name'
-        required
-        autoFocus
-      />
       <label htmlFor='inputEmail' className='sr-only'>
         Email address
       </label>

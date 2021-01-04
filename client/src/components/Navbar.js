@@ -1,11 +1,14 @@
 import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../context';
 
 const Navbar = () => {
-  const isAuthenticated = false;
-  const user = null;
+  const { user, setUser } = useAuth();
 
-  const logoutWithRedirect = () => {};
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('token');
+  };
 
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
@@ -21,8 +24,8 @@ const Navbar = () => {
           </NavLink>
         </li>
       </ul>
-      <ul className='navbar-nav ml-auto'>
-        {!isAuthenticated && (
+      <ul className='nav ml-auto'>
+        {!user && (
           <li className='nav-item mr-2'>
             <NavLink to='/auth/login'>
               <button type='button' className='btn btn-secondary'>
@@ -31,26 +34,21 @@ const Navbar = () => {
             </NavLink>
           </li>
         )}
-        {isAuthenticated && (
+        {user && (
           <Fragment>
-            <li className='nav-item'>
-              <span className='user-info'>
-                <img
-                  src={user.picture}
-                  alt='Profile'
-                  className='nav-user-profile d-inline-block rounded-circle mr-3'
-                  width='50'
-                />
-                <h6 className='d-inline-block'>{user.name}</h6>
-              </span>
-            </li>
-            <li className='nav-item'>
-              <NavLink to='/profile' activeClassName='router-link-exact-active'>
+            <li className='nav-item mr-2'>
+              <NavLink
+                to='/profile'
+                className='nav-link'
+                activeClassName='router-link-exact-active'
+              >
                 Profile
               </NavLink>
             </li>
-            <li className='nav-item' onClick={() => logoutWithRedirect()}>
-              Log out
+            <li className='nav-item' onClick={() => logout()}>
+              <button type='button' className='btn btn-secondary'>
+                Log out
+              </button>
             </li>
           </Fragment>
         )}
