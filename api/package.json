@@ -1,18 +1,32 @@
 {
-    "name": "commerce",
-    "version": "1.0.0",
-    "main": "src/index.js",
-    "license": "MIT",
-    "dependencies": {
-        "@mikro-orm/sqlite": "^4.3.4",
-        "@tensei/auth": "^0.5.2",
-        "@tensei/core": "^0.5.2",
-        "@tensei/rest": "^0.5.2"
-    },
-    "scripts": {
-        "dev": "nodemon src/index"
-    },
-    "devDependencies": {
-        "nodemon": "^2.0.6"
-    }
+  "name": "session-timeout-tenseijs-react",
+  "version": "1.0.0",
+  "description": "A simple idle timer built with reactJs and [tenseiJs](https://tenseijs.com/)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sadewole/Idle-session-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sadewole/Idle-session-timer/issues"
+  },
+  "homepage": "https://github.com/sadewole/Idle-session-timer#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-validator": "^6.9.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
 }
