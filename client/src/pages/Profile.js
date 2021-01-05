@@ -4,7 +4,9 @@ import { Navigate } from 'react-router';
 import { useAuth } from '../context';
 
 export const ProfileComponent = () => {
-  const { user } = useAuth();
+  const {
+    authState: { user },
+  } = useAuth();
 
   if (!user) return <Navigate to='/auth/login' />;
 
@@ -13,7 +15,7 @@ export const ProfileComponent = () => {
       <div className='row align-items-center profile-header mb-5 text-center text-md-left'>
         <div className='col-md-10'>
           <h2>Welcome,</h2>
-          <p className='lead text-muted'>You sign in as {user.email}</p>
+          <p className='lead text-muted'>You signed in as {user.email}</p>
         </div>
       </div>
     </div>

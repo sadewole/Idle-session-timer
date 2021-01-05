@@ -17,7 +17,10 @@ export const AuthContext = createContext([]);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthWrapper = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [authState, setAuthState] = useState({
+    user: null,
+    isAuthenticated: false,
+  });
   const [loading, setLoading] = useState(true);
 
   const initUser = () => {
@@ -29,7 +32,11 @@ export const AuthWrapper = ({ children }) => {
       client
         .get('auth/me')
         .then(({ data }) => {
-          setUser(data);
+          setAuthState((prevState) => ({
+            ...prevState,
+            user: data,
+            isAuthenticated: true,
+          }));
         })
         .catch(console.log)
         .finally(() => {
@@ -37,7 +44,11 @@ export const AuthWrapper = ({ children }) => {
         });
     } else {
       setLoading(false);
-      setUser(null);
+      setAuthState((prevState) => ({
+        ...prevState,
+        user: null,
+        isAuthenticated: false,
+      }));
     }
   };
 
@@ -46,8 +57,17 @@ export const AuthWrapper = ({ children }) => {
     // eslint-disable-next-line
   }, []);
 
+  const logout = () => {
+    setAuthState((prevState) => ({
+      ...prevState,
+      user: null,
+      isAuthenticated: false,
+    }));
+    setSession(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ authState, setAuthState, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

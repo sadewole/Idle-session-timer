@@ -5,7 +5,9 @@ import Login from './Login';
 import Register from './Register';
 
 const Auth = () => {
-  const { user } = useAuth();
+  const {
+    authState: { user },
+  } = useAuth();
 
   if (user) {
     return <Navigate to='/profile' />;

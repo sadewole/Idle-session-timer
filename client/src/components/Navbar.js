@@ -3,13 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../context';
 
 const Navbar = () => {
-  const { user, setUser } = useAuth();
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('token');
-  };
-
+  const {
+    authState: { isAuthenticated },
+    logout,
+  } = useAuth();
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
       <NavLink to='/' className='navbar-brand'>
@@ -25,7 +22,7 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className='nav ml-auto'>
-        {!user && (
+        {!isAuthenticated && (
           <li className='nav-item mr-2'>
             <NavLink to='/auth/login'>
               <button type='button' className='btn btn-secondary'>
@@ -34,7 +31,7 @@ const Navbar = () => {
             </NavLink>
           </li>
         )}
-        {user && (
+        {isAuthenticated && (
           <Fragment>
             <li className='nav-item mr-2'>
               <NavLink

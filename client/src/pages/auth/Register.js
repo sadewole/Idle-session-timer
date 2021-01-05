@@ -6,7 +6,7 @@ import client from '../../client';
 import { useAuth } from '../../context';
 
 const Register = () => {
-  const { setUser } = useAuth();
+  const { setAuthState } = useAuth();
   const onSubmit = (event) => {
     event.preventDefault();
 
@@ -19,7 +19,11 @@ const Register = () => {
       .then(({ data: { token, user } }) => {
         client.defaults.headers.token = token;
         localStorage.setItem('token', token);
-        setUser(user);
+        setAuthState((prevState) => ({
+          ...prevState,
+          user,
+          isAuthenticated: true,
+        }));
       })
       .catch(console.log);
   };

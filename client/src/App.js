@@ -6,11 +6,11 @@ import NavBar from './components/Navbar';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import Auth from './pages/auth';
+import SessionTimeout from './components/SessionTimeout';
+import { useAuth } from './context';
 
 // styles
 import './App.css';
-
-import { useAuth } from './context';
 
 const App = () => {
   const { loading } = useAuth();
@@ -30,6 +30,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
+      <SessionTimeout />
     </BrowserRouter>
   );
 };
